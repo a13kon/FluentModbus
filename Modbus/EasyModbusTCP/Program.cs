@@ -6,6 +6,8 @@ bool connect = false;
 const string ip = "172.17.5.103";
 const int port = 502;
 
+client.Disconnect();
+
 Connect(connect, ip, port);
 
 while (true)
