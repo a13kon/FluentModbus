@@ -5,9 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Trend"
         mc:Ignorable="d"
+        
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <col:ArrayList x:Key="days">
+            <sys:String>Понедельник</sys:String>
+            <sys:String>Вторник</sys:String>
+            <sys:String>Среда</sys:String>
+            <sys:String>Четверг</sys:String>
+            <sys:String>Пятница</sys:String>
+            <sys:String>Суббота</sys:String>
+            <sys:String>Воскресенье</sys:String>
+        </col:ArrayList>
+    </Window.Resources>
     <Grid>
-        <TextBox x:Name="textBox1" Width="150" Height="30" VerticalAlignment="Top" Margin="20"></TextBox>
-        <Button x:Name="button1" Width="100" Height="30" Content="Button" Click="Button_Click"></Button>
+        <Button x:Name="button1" Width="200" Height="50">
+            <Button.Content>
+                    BUTTON
+            </Button.Content>
+        </Button>
     </Grid>
 </Window>

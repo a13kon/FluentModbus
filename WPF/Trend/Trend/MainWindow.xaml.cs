@@ -20,15 +20,13 @@ namespace Trend
         public MainWindow()
         {
             InitializeComponent();
+            button1.Width = 500;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string text = textBox1.Text;
-            if (text != "")
-            {
-                MessageBox.Show(text);
-                Trace.WriteLine(text);
-            }
+            MessageBox.Show("text");
         }
+
+      
     }
 }
