@@ -85,7 +85,7 @@ namespace Trend
         {
             Random r = new Random();
 
-            dataY.Add(r.NextDouble() * counter++);
+            dataY.Add(r.NextDouble() * counter++ + counter);
             dataX.Add(DateTime.Now);
             //dataZ.Add(r.NextDouble() + 2);
 
@@ -96,7 +96,7 @@ namespace Trend
 
 
             
-            var sig = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
+            var sig = Chart.Plot.Add.Scatter(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
 
             if (follow) Chart.Plot.Axes.DateTimeTicksBottom();
 
