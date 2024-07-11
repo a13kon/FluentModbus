@@ -11,7 +11,7 @@
         <ScottPlot:WpfPlot x:Name="Chart" />
         <Button x:Name="button_start" Content="Start" Margin="-100,726,0,0"  Width="38" Height="25"/>
         <Button x:Name="button_clear" Content="Clear"  Margin="0,726,0,0"  Width="38" Height="25"/>
-        <Button x:Name="button_follow" Content="Follow"  Margin="100,726,0,0" Width="38" Height="25" Click="Button_Follow"/>
+        <CheckBox x:Name="checkbox_follow" Content="Follow"  Margin="120,740,0,0" Width="60" Height="30" IsChecked="True"/>
 
     </Grid>
 

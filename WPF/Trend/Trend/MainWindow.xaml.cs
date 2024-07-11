@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Threading;
 using ScottPlot;
+using ScottPlot.TickGenerators.TimeUnits;
+using ScottPlot.TickGenerators;
 
 namespace Trend
 {
@@ -21,54 +23,88 @@ namespace Trend
     {
         public MainWindow()
         {
+
+
             InitializeComponent();
 
-            List<double> dataX = new List<double>();
+            Chart.Plot.SavePng("demo.png", 400, 300);
+            Chart.Refresh();
+
+            List<DateTime> dataX = new List<DateTime>();
             List<double> dataY = new List<double>();
-            List<double> dataZ = new List<double>();
-            double counter = 0.0f;
+
             bool start = true;
+            bool follow = true;
+            int counter = 0;
+
+            DateTime[] now = [DateTime.Now];
+            double[] startPoint = [0];
+            Chart.Plot.Add.ScatterLine(now, startPoint, ScottPlot.Color.FromHex("#000000"));
+            Chart.Refresh();
+
 
             //Chart.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#07263b");
             Chart.Plot.Axes.SetLimits(0, 50, 0, 20);
             Chart.Plot.Axes.AutoScale();
-            Chart.Plot.ShowLegend();
+            //Chart.Plot.ShowLegend();
+            //Chart.Plot.Layout.Frameless();
+            Chart.Plot.Axes.DateTimeTicksBottom();
 
-            
 
             DispatcherTimer t = new DispatcherTimer();
-            t.Tick += (o, e) => TimerTick(o, e, ref dataX, ref dataY, ref dataZ, ref counter);
-            t.Interval = TimeSpan.FromMilliseconds(200);
-            //t.Start();
+            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref counter);
+            t.Interval = TimeSpan.FromMilliseconds(1000);
 
-            button_start.Click += (o, e) => Button_Stop(o, e, ref t, ref start);
-            button_clear.Click += (o, e) => Button_Clear(o, e, ref dataX, ref dataY, ref dataZ, ref counter);
+            button_start.Click += (o, e) => {
+                if (start)
+                {
+                    Chart.Plot.Axes.DateTimeTicksBottom();
+                    t.Start();
+                    button_start.Content = "Stop";
+                }
+                else
+                {
+                    t.Stop();
+                    button_start.Content = "Start";
+                }
+
+                start = !start;
+            }; //Button_Stop(o, e, ref t, ref start);
+
+            button_clear.Click += (o, e) => Button_Clear(o, e, ref dataX, ref dataY);
+
+            checkbox_follow.Checked += (o, e) => follow = true;
+            checkbox_follow.Unchecked += (o, e) => follow = false;
 
 
 
         }
 
-        private void TimerTick(object o, EventArgs e, ref List<double> dataX, ref List<double> dataY, ref List<double> dataZ, ref double counter)
+       
+        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<DateTime> dataX, ref List<double> dataY, ref int counter)
         {
             Random r = new Random();
 
-            dataY.Add(r.NextDouble());
-            dataX.Add(counter+=3);
-            dataZ.Add(r.NextDouble() + 2);
+            dataY.Add(r.NextDouble() * counter++);
+            dataX.Add(DateTime.Now);
+            //dataZ.Add(r.NextDouble() + 2);
 
             //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
             //Chart.Plot.Axes.AutoScale();
-
             Chart.Plot.Clear();
 
-           
 
 
+            
             var sig = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
-            sig.LegendText = "Preassure";
 
-            var sig2 = Chart.Plot.Add.ScatterLine(dataX.ToArray() ,dataZ.ToArray());
-            sig2.LegendText = "Temperature";
+            if (follow) Chart.Plot.Axes.DateTimeTicksBottom();
+
+            //var dtAx = Chart.Plot.Axes.DateTimeTicksBottom();
+            //sig.LegendText = "Preassure";
+
+            //var sig2 = Chart.Plot.Add.ScatterLine(dataX.ToArray() ,dataZ.ToArray());
+            //sig2.LegendText = "Temperature";
 
             //sig.LineColor = ScottPlot.Color.FromHex("#000000");
 
@@ -85,6 +121,7 @@ namespace Trend
 
             if (start)
             {
+                Chart.Plot.Axes.DateTimeTicksBottom();
                 t.Start();
                 button_start.Content = "Stop";
             }
@@ -101,12 +138,10 @@ namespace Trend
 
 
         }
-        private void Button_Clear(object sender, RoutedEventArgs e, ref List<double> dataX, ref List<double> dataY, ref List<double> dataZ, ref double counter)
+        private void Button_Clear(object sender, RoutedEventArgs e, ref List<DateTime> dataX, ref List<double> dataY)
         {
-            counter = 0.0f;
             dataX.Clear();
             dataY.Clear();
-            dataZ.Clear();
             Chart.Plot.Clear();
             Chart.Refresh();
 
@@ -115,11 +150,14 @@ namespace Trend
 
  
 
-        private void Button_Follow(object sender, RoutedEventArgs e)
+        private void Button_Follow(object sender, RoutedEventArgs e, ref bool follow)
         {
-
-            Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
-            Chart.Plot.Axes.AutoScale();
+            //if (follow) button_follow.Content = "follow";
+            //else button_follow.Content = "not follow";
+            //follow = !follow;
+            //Chart.Plot.Axes.DateTimeTicksBottom();
+            //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
+            //Chart.Plot.Axes.AutoScale();
         }
     }
 }
