@@ -85,7 +85,7 @@ namespace Trend
         {
             Random r = new Random();
 
-            dataY.Add(r.NextDouble() * counter++ + counter);
+            dataY.Add(r.NextDouble() + counter++);
             dataX.Add(DateTime.Now);
             //dataZ.Add(r.NextDouble() + 2);
 
