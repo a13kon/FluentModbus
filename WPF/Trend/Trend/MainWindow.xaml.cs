@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Windows.Threading;
+using ScottPlot;
 
 namespace Trend
 {
@@ -26,7 +27,9 @@ namespace Trend
             List<double> dataY = new List<double>();
             int counter = 0;
 
-            
+            ScottPlot.Plot myPlot = new();
+
+         
 
             DispatcherTimer t = new DispatcherTimer();
             t.Tick += (o, e) => Click_2(o, e, ref dataX, ref dataY, ref counter);
@@ -39,10 +42,16 @@ namespace Trend
         private void Click_2(object o, EventArgs e, ref List<double> dataX, ref List<double> dataY, ref int counter)
         {
             Random r = new Random();
-            dataY.Add(r.NextDouble() * 10);
+            dataY.Add(r.NextDouble() * 10 * counter);
             dataX.Add(counter++);
-            WpfPlot1.Plot.Add.Scatter(dataX.ToArray(), dataY.ToArray());
-            WpfPlot1.Refresh();
+            var sig = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray());
+
+            sig.LineColor = ScottPlot.Color.FromHex("#a0acb5");
+
+            Chart.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#07263b");
+            
+            Chart.Plot.SavePng("demo.png", 400, 300);
+            Chart.Refresh();
            // throw new NotImplementedException();
 
            

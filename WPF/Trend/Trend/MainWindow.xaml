@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
     <Grid>
-        <ScottPlot:WpfPlot x:Name="WpfPlot1" />
+        <ScottPlot:WpfPlot x:Name="Chart" />
         <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="131,667,0,0" VerticalAlignment="Top"/>
         
     </Grid>
