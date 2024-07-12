@@ -46,14 +46,14 @@ namespace Trend
             //Chart.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#07263b");
             Chart.Plot.Axes.SetLimits(0, 50, 0, 20);
             Chart.Plot.Axes.AutoScale();
-            //Chart.Plot.ShowLegend();
+            Chart.Plot.ShowLegend();
             //Chart.Plot.Layout.Frameless();
             Chart.Plot.Axes.DateTimeTicksBottom();
 
 
             DispatcherTimer t = new DispatcherTimer();
             t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref counter);
-            t.Interval = TimeSpan.FromMilliseconds(1000);
+            t.Interval = TimeSpan.FromMilliseconds(100);
 
             button_start.Click += (o, e) => {
                 if (start)
@@ -85,7 +85,7 @@ namespace Trend
         {
             Random r = new Random();
 
-            dataY.Add(r.NextDouble() + counter++);
+            dataY.Add(r.NextDouble() * counter++);
             dataX.Add(DateTime.Now);
             //dataZ.Add(r.NextDouble() + 2);
 
@@ -96,12 +96,12 @@ namespace Trend
 
 
             
-            var sig = Chart.Plot.Add.Scatter(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
+            var sig = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
 
             if (follow) Chart.Plot.Axes.DateTimeTicksBottom();
 
             //var dtAx = Chart.Plot.Axes.DateTimeTicksBottom();
-            //sig.LegendText = "Preassure";
+            sig.LegendText = "Preassure";
 
             //var sig2 = Chart.Plot.Add.ScatterLine(dataX.ToArray() ,dataZ.ToArray());
             //sig2.LegendText = "Temperature";
