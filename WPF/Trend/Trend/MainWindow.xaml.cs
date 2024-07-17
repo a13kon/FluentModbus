@@ -53,7 +53,7 @@ namespace Trend
 
             DispatcherTimer t = new DispatcherTimer();
             t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref counter);
-            t.Interval = TimeSpan.FromMilliseconds(100);
+            t.Interval = TimeSpan.FromMilliseconds(500);
 
             button_start.Click += (o, e) => {
                 if (start)
