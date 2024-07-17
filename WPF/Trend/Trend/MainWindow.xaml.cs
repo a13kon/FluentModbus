@@ -47,7 +47,7 @@ namespace Trend
             Chart.Plot.Axes.SetLimits(0, 50, 0, 20);
             Chart.Plot.Axes.AutoScale();
             Chart.Plot.ShowLegend();
-            //Chart.Plot.Layout.Frameless();
+            //Chart.Plot.Layout.Frameless();//
             Chart.Plot.Axes.DateTimeTicksBottom();
 
 
