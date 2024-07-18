@@ -39,12 +39,12 @@ namespace Trend
 
             bool start = true;
             bool follow = true;
-            ScottPlot.Plottables.Scatter logger;
+            ScottPlot.Plottables.SignalXY logger;
 
 
             DateTime[] now = [DateTime.Now];
             double[] startPoint = [0];
-            logger = Chart.Plot.Add.ScatterLine(now, startPoint, ScottPlot.Color.FromHex("#000000"));
+            logger = Chart.Plot.Add.SignalXY(now, startPoint, ScottPlot.Color.FromHex("#000000"));
             
             
 
@@ -82,7 +82,7 @@ namespace Trend
 
             button_clear.Click += (o, e) => Button_Clear(o, e, ref dataX, ref dataY);
 
-            checkbox_follow.Checked += (o, e) => Chart.Plot.Axes.AutoScale(); //follow = true;
+            checkbox_follow.Checked += (o, e) => follow = true;
             checkbox_follow.Unchecked += (o, e) =>  follow = false;
 
 
@@ -90,7 +90,7 @@ namespace Trend
         }
 
        
-        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref ScottPlot.Plottables.Scatter logger)
+        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref ScottPlot.Plottables.SignalXY logger)
         {
             Random r = new Random();
             DateTime now = DateTime.Now;
@@ -110,7 +110,7 @@ namespace Trend
            
 
             //ScottPlot.Plottables.DataLogger Logger1 = Chart.Plot.Add.DataLogger();
-            logger = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
+            logger = Chart.Plot.Add.SignalXY(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
 
             Chart.Plot.ShowLegend();
             logger.LegendText = "Pressure";
@@ -120,9 +120,12 @@ namespace Trend
 
                 //Chart.Plot.Axes.DateTimeTicksBottom();
                 //Chart.Plot.Axes.SetLimits(0, 5, 0, 5); 
-               
+                Chart.Plot.Axes.AutoScale();                                              
                 //Chart.Plot.Axes.SetLimitsX(10, 10); 
-                
+
+            } else
+            {
+                Chart.Plot.Axes.SetLimits();
             }
 
 
