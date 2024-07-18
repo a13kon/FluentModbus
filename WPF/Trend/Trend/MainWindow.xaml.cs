@@ -13,6 +13,8 @@ using System.Windows.Threading;
 using ScottPlot;
 using ScottPlot.TickGenerators.TimeUnits;
 using ScottPlot.TickGenerators;
+using ScottPlot.AxisPanels;
+using System.Data;
 
 namespace Trend
 {
@@ -30,78 +32,103 @@ namespace Trend
             Chart.Plot.SavePng("demo.png", 400, 300);
             Chart.Refresh();
 
-            List<DateTime> dataX = new List<DateTime>();
+            List<double> dataX = new List<double>();
             List<double> dataY = new List<double>();
+
+           
 
             bool start = true;
             bool follow = true;
-            int counter = 0;
+            ScottPlot.Plottables.Scatter logger;
+
 
             DateTime[] now = [DateTime.Now];
             double[] startPoint = [0];
-            Chart.Plot.Add.ScatterLine(now, startPoint, ScottPlot.Color.FromHex("#000000"));
+            logger = Chart.Plot.Add.ScatterLine(now, startPoint, ScottPlot.Color.FromHex("#000000"));
+            
+            
+
+            Chart.Plot.Axes.DateTimeTicksBottom();
             Chart.Refresh();
 
 
-            //Chart.Plot.FigureBackground.Color = ScottPlot.Color.FromHex("#07263b");
-            Chart.Plot.Axes.SetLimits(0, 50, 0, 20);
-            Chart.Plot.Axes.AutoScale();
+
             Chart.Plot.ShowLegend();
-            //Chart.Plot.Layout.Frameless();//
-            Chart.Plot.Axes.DateTimeTicksBottom();
+            logger.LegendText = "Pressure";
+ 
 
 
             DispatcherTimer t = new DispatcherTimer();
-            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref counter);
+            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref logger);
             t.Interval = TimeSpan.FromMilliseconds(500);
 
             button_start.Click += (o, e) => {
                 if (start)
                 {
-                    Chart.Plot.Axes.DateTimeTicksBottom();
+                   
                     t.Start();
                     button_start.Content = "Stop";
+
                 }
                 else
                 {
                     t.Stop();
                     button_start.Content = "Start";
+
                 }
 
                 start = !start;
-            }; //Button_Stop(o, e, ref t, ref start);
+            }; 
 
             button_clear.Click += (o, e) => Button_Clear(o, e, ref dataX, ref dataY);
 
-            checkbox_follow.Checked += (o, e) => follow = true;
-            checkbox_follow.Unchecked += (o, e) => follow = false;
+            checkbox_follow.Checked += (o, e) => Chart.Plot.Axes.AutoScale(); //follow = true;
+            checkbox_follow.Unchecked += (o, e) =>  follow = false;
 
 
 
         }
 
        
-        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<DateTime> dataX, ref List<double> dataY, ref int counter)
+        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref ScottPlot.Plottables.Scatter logger)
         {
             Random r = new Random();
-
-            dataY.Add(r.NextDouble() * counter++);
-            dataX.Add(DateTime.Now);
+            DateTime now = DateTime.Now;
+            dataY.Add(r.NextDouble() * 15);
+            dataX.Add(now.ToOADate());
             //dataZ.Add(r.NextDouble() + 2);
 
-            //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
+            //if (dataX.Count >= 20)
+            //{
+            //    dataX.RemoveAt(0);
+            //    dataY.RemoveAt(0);
+            //}
+
+            //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20); 
             //Chart.Plot.Axes.AutoScale();
             Chart.Plot.Clear();
+           
+
+            //ScottPlot.Plottables.DataLogger Logger1 = Chart.Plot.Add.DataLogger();
+            logger = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
+
+            Chart.Plot.ShowLegend();
+            logger.LegendText = "Pressure";
+
+            if (follow)
+            {
+
+                //Chart.Plot.Axes.DateTimeTicksBottom();
+                //Chart.Plot.Axes.SetLimits(0, 5, 0, 5); 
+               
+                //Chart.Plot.Axes.SetLimitsX(10, 10); 
+                
+            }
 
 
-
-            
-            var sig = Chart.Plot.Add.ScatterLine(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#000000"));
-
-            if (follow) Chart.Plot.Axes.DateTimeTicksBottom();
 
             //var dtAx = Chart.Plot.Axes.DateTimeTicksBottom();
-            sig.LegendText = "Preassure";
+            //sig.LegendText = "Preassure";
 
             //var sig2 = Chart.Plot.Add.ScatterLine(dataX.ToArray() ,dataZ.ToArray());
             //sig2.LegendText = "Temperature";
@@ -110,6 +137,7 @@ namespace Trend
 
 
             //Chart.Plot.SavePng("demo.png", 400, 300);
+
             Chart.Refresh();
            // throw new NotImplementedException();
 
@@ -138,7 +166,7 @@ namespace Trend
 
 
         }
-        private void Button_Clear(object sender, RoutedEventArgs e, ref List<DateTime> dataX, ref List<double> dataY)
+        private void Button_Clear(object sender, RoutedEventArgs e, ref List<double> dataX, ref List<double> dataY)
         {
             dataX.Clear();
             dataY.Clear();

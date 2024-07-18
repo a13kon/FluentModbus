@@ -6,7 +6,7 @@
         xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         xmlns:local="clr-namespace:Trend"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920" MinHeight="680" MinWidth="1000" >
     <Grid>
 
         <Grid.RowDefinitions>
@@ -29,9 +29,9 @@
         <ScottPlot:WpfPlot x:Name="Chart3" Grid.Column="0" Grid.Row="3"/>
         <ScottPlot:WpfPlot x:Name="Chart4" Grid.Column="2" Grid.Row="3"/>
         <Grid Grid.Column="0" Grid.Row="2"> 
-            <Button x:Name="button_start" Content="Start" Margin="-100,0,0,0"  Width="38" Height="25" VerticalAlignment="Top"/>
-            <Button x:Name="button_clear" Content="Clear"  Margin="0,0,0,0"  Width="38" Height="25" VerticalAlignment="Top"/>
-            <CheckBox x:Name="checkbox_follow" Content="Follow"  Margin="120,0,0,0" Width="60" Height="30" IsChecked="True" VerticalAlignment="Top"/>
+            <Button x:Name="button_start" Content="Start" Margin="40,0,0,0"  Width="38" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Button x:Name="button_clear" Content="Clear"  Margin="90,0,0,0"  Width="38" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <CheckBox x:Name="checkbox_follow" Content="Follow"  Margin="140,6,0,0" Width="60" Height="30" IsChecked="True" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         </Grid>
     </Grid>
 
