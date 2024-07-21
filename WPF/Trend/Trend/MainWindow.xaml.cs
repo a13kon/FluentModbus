@@ -41,7 +41,7 @@ namespace Trend
             bool follow = true;
             ScottPlot.Plottables.SignalXY logger;
 
-
+            //SignaxXY на большое количество точек (больше миллиона)
             DateTime[] now = [DateTime.Now];
             double[] startPoint = [0];
             logger = Chart.Plot.Add.SignalXY(now, startPoint, ScottPlot.Color.FromHex("#000000"));
