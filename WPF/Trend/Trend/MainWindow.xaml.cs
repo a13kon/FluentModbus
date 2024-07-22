@@ -85,8 +85,9 @@ namespace Trend
             checkbox_follow.Checked += (o, e) => follow = true;
             checkbox_follow.Unchecked += (o, e) =>  follow = false;
 
+            
 
-
+            
         }
 
        
@@ -189,6 +190,12 @@ namespace Trend
             //Chart.Plot.Axes.DateTimeTicksBottom();
             //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
             //Chart.Plot.Axes.AutoScale();
+        }
+
+        private void btn1_Click(object sender, RoutedEventArgs e)
+        {
+            TestWindow testWindow = new TestWindow();
+            testWindow.Show();
         }
     }
 }
