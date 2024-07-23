@@ -6,39 +6,17 @@
         xmlns:local="clr-namespace:Trend"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
-    <UniformGrid Rows="2" Columns="2">
-        <Grid Background="Aquamarine">
-            <UniformGrid Rows="2" Columns="2">
-                <Grid Background="Aquamarine">
-                    <UniformGrid Rows="2" Columns="2">
-                        <Grid Background="Aquamarine">
-                            <UniformGrid Rows="2" Columns="2">
-                                <Grid Background="Aquamarine">
-                                    <UniformGrid Rows="2" Columns="2">
-                                        <Grid Background="Aquamarine"></Grid>
-                                        <Grid Background="AntiqueWhite"></Grid>
-                                        <Grid Background="AliceBlue"></Grid>
-                                        <Grid Background="Aqua"></Grid>
-                                    </UniformGrid>
-                                </Grid>
-                                <Grid Background="AntiqueWhite"></Grid>
-                                <Grid Background="AliceBlue"></Grid>
-                                <Grid Background="Aqua"></Grid>
-                            </UniformGrid>
-                        </Grid>
-                        <Grid Background="AntiqueWhite"></Grid>
-                        <Grid Background="AliceBlue"></Grid>
-                        <Grid Background="Aqua"></Grid>
-                    </UniformGrid>
-                </Grid>
-                <Grid Background="AntiqueWhite"></Grid>
-                <Grid Background="AliceBlue"></Grid>
-                <Grid Background="Aqua"></Grid>
-            </UniformGrid>
-        </Grid>
-        <Grid Background="AntiqueWhite"></Grid>
-        <Grid Background="AliceBlue"></Grid>
-        <Grid Background="Aqua"></Grid>
-    </UniformGrid>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Content="Левая кнопка" />
+        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
+        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <Button Grid.Column="2" Content="Правая кнопка" />
+    </Grid>
 
 </Window>
