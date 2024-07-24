@@ -8,11 +8,14 @@
         Title="Window1" Height="450" Width="800">
 
     <Grid>
-        <StackPanel>
-            <Button Background="Blue" Content="1"/>
-            <Button Background="White" Content="2"/>
-            <Button Background="Red" Content="3"/>
-        </StackPanel>
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Top" Height="20">
+                
+            </Grid>
+                <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
+            <Button DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
+            <Button Background="LightGreen" Content="Центр" />
+        </DockPanel>
     </Grid>
 
 </Window>
