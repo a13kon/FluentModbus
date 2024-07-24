@@ -26,7 +26,7 @@ namespace Trend
         public MainWindow()
         {
 
-
+ 
             InitializeComponent();
 
             Chart.Plot.SavePng("demo.png", 400, 300);

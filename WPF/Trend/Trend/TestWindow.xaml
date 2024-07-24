@@ -9,14 +9,28 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="Левая кнопка" />
-        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GridSplitter Grid.Column="1"  Grid.Row="0" ShowsPreview="True" Width="3"
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        <Button Grid.Column="2" Content="Правая кнопка" />
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" Height="3"
+        HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+        <Canvas Grid.Column="0" Grid.Row="0">
+            <TextBlock>Левая панель</TextBlock>
+        </Canvas>
+        <Canvas Grid.Column="2" Grid.Row="0" Background="LightGreen">
+            <TextBlock>Правая панель</TextBlock>
+        </Canvas>
+        <Canvas Grid.ColumnSpan="3" Grid.Row="2" Background="#dfffff">
+            <TextBlock Canvas.Left="60">Нижняя панель</TextBlock>
+        </Canvas>
     </Grid>
 
 </Window>
