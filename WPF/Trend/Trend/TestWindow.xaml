@@ -9,12 +9,17 @@
 
     <Grid>
         <DockPanel LastChildFill="True">
-            <Grid DockPanel.Dock="Top" Height="20">
-                
-            </Grid>
+            <WrapPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Button BorderBrush="White" Background="White" Content="  File  "></Button>
+                <Button BorderBrush="White" Background="White" Content="  Edit  "></Button>
+                <Button BorderBrush="White" Background="White" Content="  View  "></Button>
+                <Button BorderBrush="White" Background="White" Content=" Project "></Button>
+            </WrapPanel>
                 <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
             <Button DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
-            <Button Background="LightGreen" Content="Центр" />
+            <Canvas>
+                <ToggleButton Canvas.Top="20" Canvas.Left="20">Toggle Button</ToggleButton>
+             </Canvas>
         </DockPanel>
     </Grid>
 
