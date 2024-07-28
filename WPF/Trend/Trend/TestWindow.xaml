@@ -16,9 +16,9 @@
                 <Button BorderBrush="White" Background="White" Content=" Project "></Button>
             </WrapPanel>
                 <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
-            <Button DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
+            <Button x:Name="btn1" DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
             <Canvas>
-                <ToggleButton Canvas.Top="20" Canvas.Left="20">Toggle Button</ToggleButton>
+                <CheckBox x:Name="chk1" IsThreeState="True" IsChecked="True" Content="checkbox1" Checked="chk1_Checked" Unchecked="chk1_Unchecked"></CheckBox>
              </Canvas>
         </DockPanel>
     </Grid>
