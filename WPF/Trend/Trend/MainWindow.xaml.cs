@@ -30,7 +30,7 @@ namespace Trend
         public MainWindow()
         {
 
-
+ 
             InitializeComponent();
 
             ModbusTCP modbusTCP = new ModbusTCP("172.17.5.103", 502);

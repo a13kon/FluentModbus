@@ -8,15 +8,19 @@
         Title="Window1" Height="450" Width="800">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Content="Левая кнопка" />
-        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
-        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        <Button Grid.Column="2" Content="Правая кнопка" />
+        <DockPanel LastChildFill="True">
+            <WrapPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Button BorderBrush="White" Background="White" Content="  File  "></Button>
+                <Button BorderBrush="White" Background="White" Content="  Edit  "></Button>
+                <Button BorderBrush="White" Background="White" Content="  View  "></Button>
+                <Button BorderBrush="White" Background="White" Content=" Project "></Button>
+            </WrapPanel>
+                <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
+            <Button x:Name="btn1" DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
+            <Canvas>
+                <CheckBox x:Name="chk1" IsThreeState="True" IsChecked="True" Content="checkbox1" Checked="chk1_Checked" Unchecked="chk1_Unchecked"></CheckBox>
+             </Canvas>
+        </DockPanel>
     </Grid>
 
 </Window>

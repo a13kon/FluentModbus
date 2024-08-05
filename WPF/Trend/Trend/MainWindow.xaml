@@ -33,8 +33,12 @@
             <Button x:Name="button_clear" Content="Clear"  Margin="90,0,0,0"  Width="38" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <CheckBox x:Name="checkbox_follow" Content="Follow"  Margin="140,6,0,0" Width="60" Height="30" IsChecked="True" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         </Grid>
+<<<<<<< HEAD
         <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="80,174,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" />
         <Label x:Name="lbl1" Content="Label" HorizontalAlignment="Left" Margin="38,15,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+=======
+        <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="80,174,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" IsDefault="True"/>
+>>>>>>> eb0c3f0662d96d2e4c08bb7c18d68a7db8cfbfb0
     </Grid>
 
 

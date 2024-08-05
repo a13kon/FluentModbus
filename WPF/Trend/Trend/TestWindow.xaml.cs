@@ -23,5 +23,18 @@ namespace Trend
         {
             InitializeComponent();
         }
+
+        private void chk1_Checked(object sender, RoutedEventArgs e)
+        {
+            var bc = new BrushConverter();
+            btn1.Background = (Brush)bc.ConvertFrom("#FF00FFFF");
+            chk1.BorderBrush = (Brush)bc.ConvertFrom("#FF00FFFF");
+        }
+
+        private void chk1_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var bc = new BrushConverter();
+            btn1.Background = (Brush)bc.ConvertFrom("#FF008000");
+        }
     }
 }
