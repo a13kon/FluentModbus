@@ -11,16 +11,16 @@ namespace Trend
     {
         public ModbusTcpClient client { get; }
         public bool connected { get; set; }
-        public float result { get; set; }
+        public float[] result { get; set; }
 
         public string ip { get; }
         public int port { get; }
         
-        public ModbusTCP(string ip, int port) 
+        public ModbusTCP(string ip, int port, int arrLength) 
         { 
             this.client = new ModbusTcpClient();
             this.connected = false;
-            this.result = 0.0f;
+            this.result = new float[arrLength];
 
             this.ip = ip;
             this.port = port;
