@@ -15,6 +15,9 @@ using ScottPlot.TickGenerators.TimeUnits;
 using ScottPlot.TickGenerators;
 using ScottPlot.AxisPanels;
 using System.Data;
+using FluentModbus;
+using System.Net;
+using System.Xml.Serialization;
 
 namespace Trend
 {
@@ -23,11 +26,22 @@ namespace Trend
     /// </summary>
     public partial class MainWindow : Window
     {
+  
         public MainWindow()
         {
 
 
             InitializeComponent();
+
+            ModbusTCP modbusTCP = new ModbusTCP("172.17.5.103", 502);
+
+            
+
+            DispatcherTimer readRegisters = new DispatcherTimer();
+            readRegisters.Tick += (o, e) => ReadRegistersTick(o, e, modbusTCP);
+            readRegisters.Interval = TimeSpan.FromMilliseconds(500);
+            readRegisters.Start();
+
 
             Chart.Plot.SavePng("demo.png", 400, 300);
             Chart.Refresh();
@@ -59,7 +73,7 @@ namespace Trend
 
 
             DispatcherTimer t = new DispatcherTimer();
-            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref logger);
+            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref logger, modbusTCP.result, modbusTCP.connected);
             t.Interval = TimeSpan.FromMilliseconds(500);
 
             button_start.Click += (o, e) => {
@@ -90,12 +104,56 @@ namespace Trend
             
         }
 
-       
-        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref ScottPlot.Plottables.SignalXY logger)
+        private async void ReadRegistersTick (object o, EventArgs e, ModbusTCP modbusTCP)
         {
-            Random r = new Random();
+          
+
+            await Task.Run(() =>
+            {
+               
+                if (modbusTCP.connected)
+                {
+   
+                    try
+                    {
+                        Trace.WriteLine("try connect");
+                        modbusTCP.connected = modbusTCP.client.IsConnected;
+                        var floatData = modbusTCP.client.ReadInputRegisters <float>(0xFF, 4, 1);
+                        modbusTCP.result = floatData[0];
+                    }
+                    catch
+                    {
+                        Trace.WriteLine("catch connect");
+                        modbusTCP.connected = modbusTCP.client.IsConnected;
+                    }
+                }
+
+                else
+                {
+                    try
+                    {
+                        Trace.WriteLine("try not connect");
+                        modbusTCP.client.Disconnect();
+                        modbusTCP.client.Connect(new IPEndPoint(IPAddress.Parse(modbusTCP.ip), modbusTCP.port), ModbusEndianness.BigEndian);
+                        modbusTCP.connected = modbusTCP.client.IsConnected;
+                    }
+                    catch { Trace.WriteLine("catch not connect"); }
+                }
+            });
+      
+
+        
+
+        }
+
+        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref ScottPlot.Plottables.SignalXY logger, float result, bool connected)
+        {
+            if (connected) lbl1.Content = "Connected";
+            else lbl1.Content = "NOT Connected";
+            //Random r = new Random();
             DateTime now = DateTime.Now;
-            dataY.Add(r.NextDouble() * 15);
+            //dataY.Add(r.NextDouble() * 15);
+            dataY.Add(result);
             dataX.Add(now.ToOADate());
             //dataZ.Add(r.NextDouble() + 2);
 
