@@ -19,6 +19,7 @@ using FluentModbus;
 using System.Net;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
+using Trend.Classes;
 
 namespace Trend
 {
@@ -33,53 +34,37 @@ namespace Trend
 
  
             InitializeComponent();
+                    
+            Trends trends = new Trends();
 
             ModbusTCP modbusTCP = new ModbusTCP("172.17.5.103", 502, 2);
 
+
+            DispatcherTimer readWriteRegisters = new DispatcherTimer();
+            readWriteRegisters.Tick += (o, e) => ReadWriteRegistersTick(o, e, modbusTCP);
+            readWriteRegisters.Interval = TimeSpan.FromMilliseconds(500);
+            readWriteRegisters.Start();
             
 
-            DispatcherTimer readRegisters = new DispatcherTimer();
-            readRegisters.Tick += (o, e) => ReadRegistersTick(o, e, modbusTCP);
-            readRegisters.Interval = TimeSpan.FromMilliseconds(500);
-            readRegisters.Start();
-
-
-            Chart.Plot.SavePng("demo.png", 400, 300);
-            Chart.Refresh();
-
-            List<double> dataX = new List<double>();
-            List<double> dataY = new List<double>();
-            List<double> dataY2 = new List<double>();
-
-
-
-            bool start = true;
-            bool follow = true;
-            ScottPlot.Plottables.SignalXY logger;
-
-            //SignaxXY на большое количество точек (больше миллиона)
-            DateTime[] now = [DateTime.Now];
-            double[] startPoint = [0];
-            Chart.Plot.Add.SignalXY(now, startPoint, ScottPlot.Color.FromHex("#000000"));
-            
-            
-
-            Chart.Plot.Axes.DateTimeTicksBottom();
-            Chart.Refresh();
-
-
-
-            Chart.Plot.ShowLegend();
-            //logger.LegendText = "Pressure";
- 
+            DispatcherTimer mainLoop = new DispatcherTimer();
+            mainLoop.Tick += (o, e) =>  MainLoop_Tick(o, e, modbusTCP, trends);
+            mainLoop.Interval = TimeSpan.FromMilliseconds(100);
+            mainLoop.Start();
 
 
             DispatcherTimer t = new DispatcherTimer();
-            t.Tick += (o, e) => TimerTick(o, e, ref follow, ref dataX, ref dataY, ref dataY2, modbusTCP.result, modbusTCP.connected);
+            t.Tick += (o, e) => TimerTick(o, e, modbusTCP, trends);
             t.Interval = TimeSpan.FromMilliseconds(500);
 
+
+            DateTime[] now = [DateTime.Now];
+            double[] startPoint = [0];
+            Chart.Plot.Add.SignalXY(now, startPoint, ScottPlot.Color.FromHex("#000000"));
+            Chart.Plot.Axes.DateTimeTicksBottom();                          
+
+
             button_start.Click += (o, e) => {
-                if (start)
+                if (trends.start)
                 {
                    
                     t.Start();
@@ -88,25 +73,26 @@ namespace Trend
                 }
                 else
                 {
+
                     t.Stop();
                     button_start.Content = "Start";
 
                 }
 
-                start = !start;
+                trends.start = !trends.start;
             }; 
 
-            button_clear.Click += (o, e) => Button_Clear(o, e, ref dataX, ref dataY, ref dataY2);
+            button_clear.Click += (o, e) => Button_Clear(o, e, trends);
 
-            checkbox_follow.Checked += (o, e) => follow = true;
-            checkbox_follow.Unchecked += (o, e) =>  follow = false;
-
-            
+            checkbox_follow.Checked += (o, e) => trends.follow = true;
+            checkbox_follow.Unchecked += (o, e) => trends.follow = false;            
 
             
         }
 
-        private async void ReadRegistersTick (object o, EventArgs e, ModbusTCP modbusTCP)
+
+
+        private async void ReadWriteRegistersTick (object o, EventArgs e, ModbusTCP modbusTCP)
         {
           
 
@@ -120,9 +106,9 @@ namespace Trend
                     {
                         //Trace.WriteLine("try connect");
                         var floatData = modbusTCP.client.ReadInputRegisters <float>(0xFF, 2, 2);
-                        for (int i = 0; i < modbusTCP.result.Length; i++)
+                        for (int i = 0; i < modbusTCP.mbFloat.Length; i++)
                         {
-                            modbusTCP.result[i] = floatData[i];
+                            modbusTCP.mbFloat[i] = floatData[i];
                             //Trace.WriteLine(modbusTCP.result[i]);
                         }
                     }
@@ -148,98 +134,90 @@ namespace Trend
 
         }
 
-        private void TimerTick(object o, EventArgs e, ref bool follow, ref List<double> dataX, ref List<double> dataY, ref List<double> dataY2, float[] result, bool connected)
+        private void MainLoop_Tick(object? sender, EventArgs e, ModbusTCP modbusTCP, Trends trends)
         {
-            if (connected) lbl1.Content = "Connected";
-            else lbl1.Content = "NOT Connected";
-            //Random r = new Random();
-            DateTime now = DateTime.Now;
-            //dataY.Add(r.NextDouble() * 15);
-            dataY.Add(result[0]);
-            dataY2.Add(result[1]);
-            dataX.Add(now.ToOADate());
-            //dataZ.Add(r.NextDouble() + 2);
 
-            if (dataX.Count >= Convert.ToInt32(txt1.Text)) 
+            if (trends.Xdate.Count >= Convert.ToInt32(txt1.Text))
             {
-                dataX.RemoveAt(0);
-                dataY.RemoveAt(0);
-                dataY2.RemoveAt(0);
+                trends.Xdate.RemoveAt(0);
+                trends.Ypreassure.RemoveAt(0);
+                trends.Ytemperature.RemoveAt(0);
             }
 
-            //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20); 
-            //Chart.Plot.Axes.AutoScale();
-            Chart.Plot.Clear();
-           
+            if (trends.follow && !trends.start)
+            {
 
-            //ScottPlot.Plottables.DataLogger Logger1 = Chart.Plot.Add.DataLogger();
-            var logger1 = Chart.Plot.Add.SignalXY(dataX.ToArray(), dataY.ToArray(), ScottPlot.Color.FromHex("#003366"));
-            var logger2 = Chart.Plot.Add.SignalXY(dataX.ToArray(), dataY2.ToArray(), ScottPlot.Color.FromHex("#990000"));
+                Chart.Plot.Axes.AutoScale();
+            }
+            else
+            {
+                Chart.Plot.Axes.SetLimits();
+            }
+
+            if (modbusTCP.connected)
+            {
+                lbl1.Content = "Connected";
+            }
+            else
+            {
+                lbl1.Content = "Connection error";
+            }
+
+        }
+        private void TimerTick(object o, EventArgs e, ModbusTCP modbusTCP, Trends trends)
+        {
+ 
+            DateTime now = DateTime.Now;
+
+            if (modbusTCP.connected)
+            {
+                trends.Ypreassure.Add(modbusTCP.mbFloat[0]);
+                trends.Ytemperature.Add(modbusTCP.mbFloat[1]);
+                trends.Xdate.Add(now.ToOADate());
+            }
+
+
+            Chart.Plot.Clear();
+          
+
+            var logger1 = Chart.Plot.Add.SignalXY(trends.Xdate.ToArray(), trends.Ypreassure.ToArray(), ScottPlot.Color.FromHex("#003366"));
+            var logger2 = Chart.Plot.Add.SignalXY(trends.Xdate.ToArray(), trends.Ytemperature.ToArray(), ScottPlot.Color.FromHex("#990000"));
 
             Chart.Plot.ShowLegend();
             Chart.Plot.Legend.Alignment = Alignment.LowerLeft;
             logger1.LegendText = "Давление";
             logger2.LegendText = "Температура";
 
-            if (follow)
-            {
-
-                //Chart.Plot.Axes.DateTimeTicksBottom();
-                //Chart.Plot.Axes.SetLimits(0, 5, 0, 5); 
-                Chart.Plot.Axes.AutoScale();                                              
-                //Chart.Plot.Axes.SetLimitsX(10, 10); 
-
-            } else
-            {
-                Chart.Plot.Axes.SetLimits();
-            }
-
-
-
-            //var dtAx = Chart.Plot.Axes.DateTimeTicksBottom();
-            //sig.LegendText = "Preassure";
-
-            //var sig2 = Chart.Plot.Add.ScatterLine(dataX.ToArray() ,dataZ.ToArray());
-            //sig2.LegendText = "Temperature";
-
-            //sig.LineColor = ScottPlot.Color.FromHex("#000000");
-
-
-            //Chart.Plot.SavePng("demo.png", 400, 300);
 
             Chart.Refresh();
-           // throw new NotImplementedException();
 
            
         }
 
-        private void Button_Stop(object sender, RoutedEventArgs e, ref DispatcherTimer t, ref bool start)
+        //private void Button_Stop(object sender, RoutedEventArgs e, ref DispatcherTimer t, ref bool start)
+        //{
+
+        //    if (start)
+        //    {
+        //        Chart.Plot.Axes.DateTimeTicksBottom();
+        //        t.Start();
+        //        button_start.Content = "Stop";
+        //    }
+        //    else
+        //    {
+        //        t.Stop();
+        //        button_start.Content = "Start";
+        //    }
+
+        //    start = !start;               
+
+
+        //}
+        private void Button_Clear(object sender, RoutedEventArgs e, Trends trends)
         {
-
-            if (start)
-            {
-                Chart.Plot.Axes.DateTimeTicksBottom();
-                t.Start();
-                button_start.Content = "Stop";
-            }
-            else
-            {
-                t.Stop();
-                button_start.Content = "Start";
-            }
-
-            start = !start;
-                //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
-                //Chart.Plot.Axes.AutoScale();
-                
-
-
-        }
-        private void Button_Clear(object sender, RoutedEventArgs e, ref List<double> dataX, ref List<double> dataY, ref List<double> dataY2)
-        {
-            dataX.Clear();
-            dataY.Clear();
-            dataY2.Clear();
+            trends.Xdate.Clear();
+            trends.Ypreassure.Clear();
+            trends.Ytemperature.Clear();
             Chart.Plot.Clear();
             Chart.Refresh();
 
@@ -247,16 +225,6 @@ namespace Trend
         }
 
  
-
-        private void Button_Follow(object sender, RoutedEventArgs e, ref bool follow)
-        {
-            //if (follow) button_follow.Content = "follow";
-            //else button_follow.Content = "not follow";
-            //follow = !follow;
-            //Chart.Plot.Axes.DateTimeTicksBottom();
-            //Chart.Plot.Axes.SetLimits(0, 5000, 0, 20);
-            //Chart.Plot.Axes.AutoScale();
-        }
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

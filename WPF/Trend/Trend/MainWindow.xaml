@@ -35,7 +35,7 @@
 
         <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="36,62,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" />
         <Label x:Name="lbl1" Content="Label" HorizontalAlignment="Left" Margin="38,15,0,0" Grid.Row="3" VerticalAlignment="Top"/>
-        <TextBox x:Name="txt1" HorizontalAlignment="Left" Margin="36,103,0,0" Grid.Row="3" TextWrapping="Wrap" Text="200" VerticalAlignment="Top" Width="120" PreviewTextInput="NumberValidationTextBox"/>
+        <TextBox x:Name="txt1" HorizontalAlignment="Left" Margin="36,103,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1000000" VerticalAlignment="Top" Width="120" PreviewTextInput="NumberValidationTextBox"/>
     </Grid>
 
 
