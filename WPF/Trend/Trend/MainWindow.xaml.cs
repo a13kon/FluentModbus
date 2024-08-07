@@ -34,7 +34,9 @@ namespace Trend
 
  
             InitializeComponent();
-                    
+
+            string trendLimit = "1000";
+
             Trends trends = new Trends();
 
             ModbusTCP modbusTCP = new ModbusTCP("172.17.5.103", 502, 2);
@@ -47,7 +49,7 @@ namespace Trend
             
 
             DispatcherTimer mainLoop = new DispatcherTimer();
-            mainLoop.Tick += (o, e) =>  MainLoop_Tick(o, e, modbusTCP, trends);
+            mainLoop.Tick += (o, e) =>  MainLoop_Tick(o, e, modbusTCP, trends, ref trendLimit);
             mainLoop.Interval = TimeSpan.FromMilliseconds(100);
             mainLoop.Start();
 
@@ -60,8 +62,7 @@ namespace Trend
             DateTime[] now = [DateTime.Now];
             double[] startPoint = [0];
             Chart.Plot.Add.SignalXY(now, startPoint, ScottPlot.Color.FromHex("#000000"));
-            Chart.Plot.Axes.DateTimeTicksBottom();                          
-
+            Chart.Plot.Axes.DateTimeTicksBottom();
 
             button_start.Click += (o, e) => {
                 if (trends.start)
@@ -134,10 +135,10 @@ namespace Trend
 
         }
 
-        private void MainLoop_Tick(object? sender, EventArgs e, ModbusTCP modbusTCP, Trends trends)
+        private void MainLoop_Tick(object? sender, EventArgs e, ModbusTCP modbusTCP, Trends trends, ref string trendLimit)
         {
 
-            if (trends.Xdate.Count >= Convert.ToInt32(txt1.Text))
+            if (trends.Xdate.Count >= Convert.ToInt32(trendLimit))
             {
                 trends.Xdate.RemoveAt(0);
                 trends.Ypreassure.RemoveAt(0);
@@ -224,16 +225,15 @@ namespace Trend
 
         }
 
- 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+
         private void btn1_Click(object sender, RoutedEventArgs e)
         {
             TestWindow testWindow = new TestWindow();
-            testWindow.Show();
+            testWindow.Owner = this;
+            testWindow.ShowDialog(); 
         }
+
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿<Window x:Class="Trend.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:numeric="http://gu.se/NumericInput"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -35,7 +36,11 @@
 
         <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="36,62,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" />
         <Label x:Name="lbl1" Content="Label" HorizontalAlignment="Left" Margin="38,15,0,0" Grid.Row="3" VerticalAlignment="Top"/>
-        <TextBox x:Name="txt1" HorizontalAlignment="Left" Margin="36,103,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1000000" VerticalAlignment="Top" Width="120" PreviewTextInput="NumberValidationTextBox"/>
+        <ComboBox HorizontalAlignment="Left" Margin="310,103,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120"/>
+       
+        <numeric:DoubleBox ValidationTrigger="PropertyChanged" CanValueBeNull="False" MaxValue="100" MinValue="1" HorizontalAlignment="Left" Margin="47,128,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120"/>
+
+
     </Grid>
 
 
