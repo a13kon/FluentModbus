@@ -34,7 +34,7 @@
             <CheckBox x:Name="checkbox_follow" Content="Follow"  Margin="140,6,0,0" Width="60" Height="30" IsChecked="True" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         </Grid>
 
-        <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="36,62,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" />
+        <Button x:Name="btn1" Content="Button" HorizontalAlignment="Left" Margin="36,62,0,0" Grid.Row="3" VerticalAlignment="Top" Click="btn1_Click" ToolTip="Новое окно"/>
         <Label x:Name="lbl1" Content="Label" HorizontalAlignment="Left" Margin="38,15,0,0" Grid.Row="3" VerticalAlignment="Top"/>
         <ComboBox HorizontalAlignment="Left" Margin="310,103,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120"/>
        

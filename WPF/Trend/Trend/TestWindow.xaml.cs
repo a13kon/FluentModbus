@@ -34,18 +34,23 @@ namespace Trend
 
         private void chk1_Unchecked(object sender, RoutedEventArgs e)
         {
-            var bc = new BrushConverter();
-            btn1.Background = (Brush)bc.ConvertFrom("#FF008000");
+            //var bc = new BrushConverter();
+            //btn1.Background = (Brush)bc.ConvertFrom("#FF008000");
         }
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            var bc = new BrushConverter();
-            btn1.Background = (Brush)bc.ConvertFrom("#FF00FFFF");
-            chk1.BorderBrush = (Brush)bc.ConvertFrom("#FF00FFFF");
+            //var bc = new BrushConverter();
+            //btn1.Background = (Brush)bc.ConvertFrom("#FF00FFFF");
+            //chk1.BorderBrush = (Brush)bc.ConvertFrom("#FF00FFFF");
 
             
 
+        }
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton pressed = (RadioButton)sender;
+            MessageBox.Show(pressed.Content.ToString());
         }
     }
 }

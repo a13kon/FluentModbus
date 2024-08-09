@@ -18,8 +18,17 @@
                 <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
             <Button x:Name="btn1" DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
             <Canvas>
-                <CheckBox x:Name="chk1" IsThreeState="True" IsChecked="True" Content="checkbox1" Checked="chk1_Checked" Unchecked="chk1_Unchecked"></CheckBox>
-             </Canvas>
+                
+                <StackPanel x:Name="stackPanel">
+                    <RadioButton GroupName="Languages" Content="C#" IsChecked="True" Checked="RadioButton_Checked"/>
+                    <RadioButton GroupName="Languages" Content="VB.NET" Checked="RadioButton_Checked"/>
+                    <RadioButton GroupName="Languages" Content="C++" Checked="RadioButton_Checked"/>
+                    <RadioButton GroupName="Technologies" Content="WPF" IsChecked="True" />
+                    <RadioButton GroupName="Technologies" Content="WinForms" />
+                    <RadioButton GroupName="Technologies" Content="ASP.NET" />
+                </StackPanel>
+                
+            </Canvas>
         </DockPanel>
     </Grid>
 
