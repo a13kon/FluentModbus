@@ -20,10 +20,13 @@
             <Canvas>
                 
                 <StackPanel x:Name="stackPanel">
-                    <RadioButton x:Name="ch1" Content="C#" IsChecked="True"/>
-                    <RadioButton x:Name="ch2" Content="VB.NET"/>
-                    <RadioButton x:Name="ch3" Content="C++"/>
+                    <RadioButton x:Name="ch1" GroupName="Languages" Content="C#" IsChecked="True"/>
+                    <RadioButton x:Name="ch2" GroupName="Languages" Content="VB.NET"/>
+                    <RadioButton x:Name="ch3" GroupName="Languages" Content="C++"/>
                     <Button Click="Button_Click">Выбор</Button>
+                    <RadioButton x:Name="ch4" Content="C++" IsChecked="{Binding ElementName=ch3, Path=IsChecked}"/>
+                    <TextBox x:Name="myTextBox" Height="30" />
+                    <TextBlock x:Name="myTextBlock" Text="{Binding ElementName=myTextBox,Path=Text}" Height="30" />
                 </StackPanel>
                 
             </Canvas>
