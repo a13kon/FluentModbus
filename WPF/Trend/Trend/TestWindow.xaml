@@ -19,7 +19,7 @@
             <Button x:Name="btn1" DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
             <Canvas>
                 
-                <StackPanel x:Name="stackPanel">
+                <!--<StackPanel x:Name="stackPanel">
                     <RadioButton x:Name="ch1" GroupName="Languages" Content="C#" IsChecked="True"/>
                     <RadioButton x:Name="ch2" GroupName="Languages" Content="VB.NET"/>
                     <RadioButton x:Name="ch3" GroupName="Languages" Content="C++"/>
@@ -27,8 +27,20 @@
                     <RadioButton x:Name="ch4" Content="C++" IsChecked="{Binding ElementName=ch3, Path=IsChecked}"/>
                     <TextBox x:Name="myTextBox" Height="30" />
                     <TextBlock x:Name="myTextBlock" Text="{Binding ElementName=myTextBox,Path=Text}" Height="30" />
-                </StackPanel>
-                
+                </StackPanel>-->
+                <GroupBox Padding="5">
+                    <GroupBox.Header>
+                        <Button Background="Lavender" Click="Button_Click">Выбрать блюдо</Button>
+                    </GroupBox.Header>
+                    <StackPanel>
+                        <RadioButton x:Name="ch1" GroupName="menu" IsChecked="True" Margin="3" Content="Салат Оливье"></RadioButton>
+                        <RadioButton x:Name="ch2" GroupName="menu" Margin="3">Котлеты по-киевски</RadioButton>
+                        <RadioButton x:Name="ch3" GroupName="menu" Margin="3">Селедка под шубой</RadioButton>
+                        <RadioButton x:Name="ch4" GroupName="extra" Margin="3" IsChecked="{Binding ElementName=ch3, Path=IsChecked}" >extra</RadioButton>
+                    </StackPanel>
+                </GroupBox>
+
+
             </Canvas>
         </DockPanel>
     </Grid>

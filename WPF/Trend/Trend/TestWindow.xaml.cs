@@ -52,8 +52,18 @@ namespace Trend
         {
             if (ch1.IsChecked == true)
             {
-                MessageBox.Show("1");
+                MessageBox.Show(ch1.Content.ToString());
+            }
+            if (ch2.IsChecked == true)
+            {
+                MessageBox.Show(ch2.Content.ToString());
+            }
+            if (ch3.IsChecked == true)
+            {
+                MessageBox.Show(ch3.Content.ToString());
             }
         }
+
+
     }
 }
