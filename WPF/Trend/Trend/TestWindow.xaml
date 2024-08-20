@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Trend"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800" Initialized="Window_Initialized">
-
+    <Window.Resources>
+        <local:Sensor x:Key="Sens" Enable="False"/>
+    </Window.Resources>
     <Grid>
         <DockPanel LastChildFill="True">
             <WrapPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -33,10 +35,9 @@
                         <Button Background="Lavender" Click="Button_Click">Выбрать блюдо</Button>
                     </GroupBox.Header>
                     <StackPanel>
-                        <RadioButton x:Name="ch1" GroupName="menu" IsChecked="True" Margin="3" Content="Салат Оливье"></RadioButton>
-                        <RadioButton x:Name="ch2" GroupName="menu" Margin="3">Котлеты по-киевски</RadioButton>
-                        <RadioButton x:Name="ch3" GroupName="menu" Margin="3">Селедка под шубой</RadioButton>
-                        <RadioButton x:Name="ch4" GroupName="extra" Margin="3" IsChecked="{Binding ElementName=ch3, Path=IsChecked}" >extra</RadioButton>
+
+                        <CheckBox x:Name="ch3" Margin="3">ТО</CheckBox>
+                        <CheckBox x:Name="ch4" Margin="3" IsChecked="{Binding Source={StaticResource Sens}, Path=Enable}" >Датчик</CheckBox>
                     </StackPanel>
                 </GroupBox>
 
