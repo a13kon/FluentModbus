@@ -47,15 +47,13 @@ namespace Trend
             
 
         }
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton pressed = (RadioButton)sender;
-            MessageBox.Show(pressed.Content.ToString());
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            if (ch1.IsChecked == true)
+            {
+                MessageBox.Show("1");
+            }
         }
     }
 }

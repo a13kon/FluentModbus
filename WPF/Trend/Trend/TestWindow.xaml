@@ -20,12 +20,10 @@
             <Canvas>
                 
                 <StackPanel x:Name="stackPanel">
-                    <RadioButton GroupName="Languages" Content="C#" IsChecked="True" Checked="RadioButton_Checked"/>
-                    <RadioButton GroupName="Languages" Content="VB.NET" Checked="RadioButton_Checked"/>
-                    <RadioButton GroupName="Languages" Content="C++" Checked="RadioButton_Checked"/>
-                    <RadioButton GroupName="Technologies" Content="WPF" IsChecked="True" />
-                    <RadioButton GroupName="Technologies" Content="WinForms" />
-                    <RadioButton GroupName="Technologies" Content="ASP.NET" />
+                    <RadioButton x:Name="ch1" Content="C#" IsChecked="True"/>
+                    <RadioButton x:Name="ch2" Content="VB.NET"/>
+                    <RadioButton x:Name="ch3" Content="C++"/>
+                    <Button Click="Button_Click">Выбор</Button>
                 </StackPanel>
                 
             </Canvas>
