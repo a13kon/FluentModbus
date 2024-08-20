@@ -52,5 +52,10 @@ namespace Trend
             RadioButton pressed = (RadioButton)sender;
             MessageBox.Show(pressed.Content.ToString());
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
