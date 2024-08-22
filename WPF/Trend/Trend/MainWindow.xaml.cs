@@ -39,7 +39,7 @@ namespace Trend
 
             Trends trends = new Trends();
 
-            ModbusTCP modbusTCP = new ModbusTCP("172.17.5.103", 502, 2);
+            ModbusTCP modbusTCP = new ModbusTCP("172.17.5.114", 503, 2);
 
 
             DispatcherTimer readWriteRegisters = new DispatcherTimer();
@@ -106,12 +106,16 @@ namespace Trend
                     try
                     {
                         //Trace.WriteLine("try connect");
-                        var floatData = modbusTCP.client.ReadInputRegisters <float>(0xFF, 2, 2);
+                        var floatData = modbusTCP.client.ReadHoldingRegisters<float>(0xFF, 4, 2);
                         for (int i = 0; i < modbusTCP.mbFloat.Length; i++)
                         {
                             modbusTCP.mbFloat[i] = floatData[i];
                             //Trace.WriteLine(modbusTCP.result[i]);
                         }
+
+                        modbusTCP.client.WriteSingleCoil(0xFF, 0, true);
+                        //modbusTCP.client.WriteMultipleRegisters(0xFF, 6, [55.1f]);
+
                     }
                     catch
                     {
