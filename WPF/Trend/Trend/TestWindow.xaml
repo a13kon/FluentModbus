@@ -5,45 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Trend"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800" Initialized="Window_Initialized">
+        Title="Стенд" Height="450" Width="800" Background="#26272B" Foreground="AliceBlue" >
     <Window.Resources>
-        <local:Sensor x:Key="Sens" Enable="False"/>
+        <Style  TargetType="{x:Type ScrollViewer}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter Grid.Column="0"/>
+                            <ScrollBar Grid.Column="1"
+                       Opacity="0.5"
+                       Name="PART_VerticalScrollBar"
+                       Value="{TemplateBinding VerticalOffset}"
+                       Maximum="{TemplateBinding ScrollableHeight}"
+                       ViewportSize="{TemplateBinding ViewportHeight}"
+                       Width="10"
+                       MinWidth="10"
+                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
-    <Grid>
+
+    <Grid Background="#8A8E9C">
         <DockPanel LastChildFill="True">
-            <WrapPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Button BorderBrush="White" Background="White" Content="  File  "></Button>
-                <Button BorderBrush="White" Background="White" Content="  Edit  "></Button>
-                <Button BorderBrush="White" Background="White" Content="  View  "></Button>
-                <Button BorderBrush="White" Background="White" Content=" Project "></Button>
-            </WrapPanel>
-                <Button DockPanel.Dock="Bottom" Background="BlanchedAlmond" Content="Нижняя кнопка" />
-            <Button x:Name="btn1" DockPanel.Dock="Right" Background="DarkGreen" Content="Правая кнопка" />
-            <Canvas>
+            <Menu DockPanel.Dock="Top" Background="#31333A" Foreground="AliceBlue">
+              
+                <MenuItem Header="File">
+                    <MenuItem Header="New Project"></MenuItem>
+                    <MenuItem Header="Open Project">
+                        <MenuItem Header="WinForms"></MenuItem>
+                        <MenuItem Header="WPF"></MenuItem>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Exit"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Edit"></MenuItem>
+                <MenuItem Header="View"></MenuItem>
+            </Menu>
+            <Grid>
                 
-                <!--<StackPanel x:Name="stackPanel">
-                    <RadioButton x:Name="ch1" GroupName="Languages" Content="C#" IsChecked="True"/>
-                    <RadioButton x:Name="ch2" GroupName="Languages" Content="VB.NET"/>
-                    <RadioButton x:Name="ch3" GroupName="Languages" Content="C++"/>
-                    <Button Click="Button_Click">Выбор</Button>
-                    <RadioButton x:Name="ch4" Content="C++" IsChecked="{Binding ElementName=ch3, Path=IsChecked}"/>
-                    <TextBox x:Name="myTextBox" Height="30" />
-                    <TextBlock x:Name="myTextBlock" Text="{Binding ElementName=myTextBox,Path=Text}" Height="30" />
-                </StackPanel>-->
-                <GroupBox Padding="5">
-                    <GroupBox.Header>
-                        <Button Background="Lavender" Click="Button_Click">Выбрать блюдо</Button>
-                    </GroupBox.Header>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="150"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2.5*" MinWidth="150"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" MinHeight="300"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" MinHeight="150"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#31333A"/>
+                <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#31333A"/>
+                <ScrollViewer Grid.Column="2">
                     <StackPanel>
-
-                        <CheckBox x:Name="ch3" Margin="3">ТО</CheckBox>
-                        <CheckBox x:Name="ch4" Margin="3" IsChecked="{Binding Source={StaticResource Sens}, Path=Enable}" >Датчик</CheckBox>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
+                        <Button MinHeight="60" Background="AliceBlue"/>
                     </StackPanel>
-                </GroupBox>
-
-
-            </Canvas>
+                </ScrollViewer>
+            </Grid>
         </DockPanel>
     </Grid>
-
 </Window>

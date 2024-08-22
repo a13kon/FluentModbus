@@ -113,7 +113,7 @@ namespace Trend
                             //Trace.WriteLine(modbusTCP.result[i]);
                         }
 
-                        modbusTCP.client.WriteSingleCoil(0xFF, 0, true);
+                        //modbusTCP.client.WriteSingleCoil(0xFF, 0, true);
                         //modbusTCP.client.WriteMultipleRegisters(0xFF, 6, [55.1f]);
 
                     }

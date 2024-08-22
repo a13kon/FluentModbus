@@ -14,10 +14,7 @@ using System.Windows.Shapes;
 
 namespace Trend
 {
-    public class Sensor
-    {
-        public bool Enable { get; set; }
-    }
+
 
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -31,43 +28,5 @@ namespace Trend
            
            
         }
-
-        private void chk1_Checked(object sender, RoutedEventArgs e)
-        {
-            //var bc = new BrushConverter();
-            //btn1.Background = (Brush)bc.ConvertFrom("#FF00FFFF");
-            //chk1.BorderBrush = (Brush)bc.ConvertFrom("#FF00FFFF");
-            //chk1.IsChecked = !chk1.IsChecked;
-            
-        }
-
-        private void chk1_Unchecked(object sender, RoutedEventArgs e)
-        {
-            //var bc = new BrushConverter();
-            //btn1.Background = (Brush)bc.ConvertFrom("#FF008000");
-        }
-
-        private void Window_Initialized(object sender, EventArgs e)
-        {
-            //var bc = new BrushConverter();
-            //btn1.Background = (Brush)bc.ConvertFrom("#FF00FFFF");
-            //chk1.BorderBrush = (Brush)bc.ConvertFrom("#FF00FFFF");
-
-            
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (ch3.IsChecked == true)
-            {
-                MessageBox.Show(ch3.Content.ToString());
-            }
-            
-        }
-
-
-
     }
 }
