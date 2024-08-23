@@ -11,6 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ScottPlot;
+using ScottPlot.TickGenerators.TimeUnits;
+using ScottPlot.TickGenerators;
+using ScottPlot.AxisPanels;
 
 namespace Trend
 {
@@ -25,10 +29,30 @@ namespace Trend
         {
             InitializeComponent();
 
+            
+            
            
            
         }
 
+        private void Chart_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+           
+            if (e.Delta > 0)
+            {
+                scrollTrend.LineUp();
+                scrollTrend.LineUp();
+                scrollTrend.LineUp();
+            }
+            else
+            {
+                scrollTrend.LineDown();
+                scrollTrend.LineDown();
+                scrollTrend.LineDown();
+            }
+            e.Handled = true;
+
+        }
 
     }
 }
